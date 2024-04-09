@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { InputText } from "primereact/inputtext";
 import { Dropdown } from "primereact/dropdown";
 import { InputMask } from "primereact/inputmask";
+import useApi from "./utils/http";
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -13,24 +14,20 @@ const Register = () => {
   });
   const [countries, setCountries] = useState([]);
 
-  useEffect(() => {
-    fetchCountries();
-  }, []);
+  const api = useApi(); // Move the useApi hook inside the Register component
 
-  fetch("country.php")
-    .then((response) => response.json())
-    .then((data) => {
-      const countrySelect = document.getElementById("country_name");
-      data.forEach((country) => {
-        const option = document.createElement("option");
-        option.value = country.country_name;
-        option.textContent = country.country_name;
-        countrySelect.appendChild(option);
-      });
-    })
-    .catch((error) => {
-      console.error("Error fetching countries:", error);
-    });
+  useEffect(() => {
+    const fetchCountries = async () => {
+      try {
+        const response = await api.get("country.php"); // Use the api.get() method from useApi hook
+        setCountries(response.data); // Assuming response.data contains the list of countries
+      } catch (error) {
+        console.error("Error fetching countries:", error);
+      }
+    };
+
+    fetchCountries();
+  }, [api]); // Add api as a dependency to the useEffect hook
 
   const handleChange = (e) => {
     const { name, value } = e.target;
