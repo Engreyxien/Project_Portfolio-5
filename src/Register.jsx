@@ -3,6 +3,7 @@ import { InputText } from "primereact/inputtext";
 import { Dropdown } from "primereact/dropdown";
 import { InputMask } from "primereact/inputmask";
 import useApi from "./utils/http";
+import { Button } from "primereact/button";
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -44,10 +45,30 @@ const Register = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log("Form data to be submitted:", formData);
+    try {
+      const response = await fetch("/user.php", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        console.log("User added successfully:", data);
+        // Handle success response here
+      } else {
+        console.error("Failed to add user:", response.statusText);
+        // Handle error response here
+      }
+    } catch (error) {
+      console.error("Error adding user:", error);
+      // Handle any network or other errors here
+    }
   };
 
   return (
@@ -87,8 +108,14 @@ const Register = () => {
           onChange={handleCountryChange}
           options={countries}
         />
-
-        <button type="submit">Register</button>
+        <Button
+          id="Button"
+          label="Register"
+          icon="pi pi-user-plus"
+          iconPos="right"
+          severity="success"
+          onClick={handleSubmit}
+        />
       </form>
     </div>
   );
