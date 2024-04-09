@@ -1,0 +1,31 @@
+#PopularDestinations {
+  padding: 3rem 4rem;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+.BigImg {
+  margin: 20px;
+  display: flex;
+}
+.smallImage {
+  display: flex;
+  justify-content: space-between;
+}
+#img1,
+#img2 {
+  width: 400px;
+}
+.PopularBottom {
+  display: flex;
+  margin: auto;
+}
+
+img {
+  margin: 20px 20px;
+}
+h3 br,
+h4 br {
+  display: block;
+  color: grey;
+}

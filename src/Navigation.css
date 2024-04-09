@@ -1,0 +1,22 @@
+#ButtonA {
+  margin-right: 0;
+}
+
+.rght Input,
+Button {
+  margin: 10px;
+}
+#ButtonR,
+#ButtonS {
+  background-color: #f1f2f6;
+  color: #12130f;
+}
+.Input {
+  width: 30rem;
+}
+img {
+  margin-left: 20px;
+}
+.menu {
+  background-color: #27187e;
+}

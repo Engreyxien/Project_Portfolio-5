@@ -1,0 +1,33 @@
+.HeaderHero {
+  padding: 5rem 8rem;
+  background: url(https://wallpapercave.com/wp/Chk1VFQ.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  border-radius: 5px;
+  height: 400px;
+}
+
+.LOGO {
+  border-width: 3px;
+  border-color: black;
+  background-color: transparent;
+  border-radius: 20px;
+  backdrop-filter: blur(3px);
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+}
+Legend {
+  border-width: 3px;
+  border-color: black;
+}
+
+.headText {
+  font-size: x-large;
+  color: black;
+  padding-left: 5rem;
+  font-weight: bold;
+}
+img {
+  border-radius: 10px;
+}
