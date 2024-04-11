@@ -37,13 +37,13 @@ export const authRoutes = [
     name: "Register",
     path: "/register",
     exact: true,
-    component: <Register />,
+    element: <Register />,
   },
   {
     name: "Signin",
     path: "/signin",
     exact: true,
-    component: <Signin />,
+    element: <Signin />,
   },
 ];
 export const allRoutes = [...routes, ...authRoutes];

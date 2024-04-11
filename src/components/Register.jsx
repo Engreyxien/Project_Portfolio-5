@@ -4,7 +4,8 @@ import { Dropdown } from "primereact/dropdown";
 import { InputMask } from "primereact/inputmask";
 import { Button } from "primereact/button";
 import { Route } from "react-router-dom";
-import userApi from "../utils/http";
+import { useApi } from "../utils/http";
+
 import Navigation from "../Navigation";
 
 const Register = () => {
@@ -44,7 +45,6 @@ const Register = () => {
     setFormData({
       ...formData,
       country: e.target.value,
-      S,
     });
   };
 
@@ -76,7 +76,6 @@ const Register = () => {
 
   return (
     <div>
-      <Navigation />
       <h2>Register</h2>
       <form onSubmit={handleSubmit}>
         <label htmlFor="username">Username:</label>

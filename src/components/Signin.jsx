@@ -21,7 +21,6 @@ const Signin = () => {
 
   return (
     <div>
-      <Navbar />
       <div className="login-form">
         <div>
           <span>Username</span>

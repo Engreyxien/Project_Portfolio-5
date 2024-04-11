@@ -1,6 +1,6 @@
 import axios from "axios";
 
-function useApi() {
+export function useApi() {
   return axios.create({
     baseURL: import.meta.env.VITE_API,
     headers: {
@@ -9,5 +9,4 @@ function useApi() {
     },
   });
 }
-
 export default useApi;

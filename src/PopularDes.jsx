@@ -25,10 +25,7 @@ const PopularDes = () => {
             </h3>
           </div>
           <div id="image2">
-            <a
-              href
-              src="https://www.gettyimages.com/photos/cebu-city-philippines"
-            >
+            <a href="https://www.gettyimages.com/photos/cebu-city-philippines">
               <Image
                 id="img2"
                 src="https://wallpaperaccess.com/full/2075093.gif"

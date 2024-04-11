@@ -11,20 +11,12 @@ import Signin from "./components/Signin";
 const App = () => {
   return (
     <div>
-      <Navigation>
-        <Routes>
-          {allRoutes.map((route, index) => (
-            <Route
-              key={index}
-              path={route.path}
-              component={route.component || (() => route.element)}
-              exact
-            />
-          ))}
-          <Route path="/register" element={<Register />} />
-          <Route path="/signin" element={<Signin />} />
-        </Routes>
-      </Navigation>
+      <Navigation />
+      <Routes>
+        {allRoutes.map((route, index) => (
+          <Route key={index} path={route.path} element={route.element} />
+        ))}
+      </Routes>
       <AppHeader />
       <PopularDes />
       <TablesBtn />
