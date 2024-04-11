@@ -15,7 +15,7 @@ const AppButtons = () => {
       code: "01",
       states: [
         {
-          name: "New South Wales",
+          name: "Region I",
           cities: [
             { cname: "Sydney", code: "A-SY" },
             { cname: "Newcastle", code: "A-NE" },
@@ -23,10 +23,17 @@ const AppButtons = () => {
           ],
         },
         {
-          name: "Queensland",
+          name: "Region II",
           cities: [
             { cname: "Brisbane", code: "A-BR" },
             { cname: "Townsville", code: "A-TO" },
+          ],
+        },
+        {
+          name: "Region III",
+          cities: [
+            { cname: "Perth", code: "A-PE" },
+            { cname: "Adelaide", code: "A-AD" },
           ],
         },
       ],
@@ -56,7 +63,7 @@ const AppButtons = () => {
       code: "03",
       states: [
         {
-          name: "California",
+          name: "Region",
           cities: [
             { cname: "Los Angeles", code: "US-LA" },
             { cname: "San Diego", code: "US-SD" },

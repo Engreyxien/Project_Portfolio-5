@@ -3,6 +3,7 @@ import { InputText } from "primereact/inputtext";
 import { Dropdown } from "primereact/dropdown";
 import { InputMask } from "primereact/inputmask";
 import { Button } from "primereact/button";
+import { Route } from "react-router-dom";
 import userApi from "../utils/http";
 import Navigation from "../Navigation";
 
@@ -16,12 +17,12 @@ const Register = () => {
   });
   const [countries, setCountries] = useState([]);
 
-  const api = useApi(); // Move the useApi hook inside the Register component
+  const api = useApi();
 
   useEffect(() => {
     const fetchCountries = async () => {
       try {
-        const response = await api.get("country.php"); // Use the api.get() method from useApi hook
+        const response = await api.get("country.php");
         setCountries(response.data);
       } catch (error) {
         console.error("Error fetching countries:", error);
@@ -29,7 +30,7 @@ const Register = () => {
     };
 
     fetchCountries();
-  }, [api]); // Add api as a dependency to the useEffect hook
+  }, [api]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;

@@ -3,8 +3,9 @@ import { InputText } from "primereact/inputtext";
 import { Button } from "primereact/button";
 import axios from "axios";
 import Navbar from "../Navigation";
+import "./Signin.css";
 
-const Login = () => {
+const Signin = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -21,25 +22,27 @@ const Login = () => {
   return (
     <div>
       <Navbar />
-      <div>
-        <span>Username</span>
-        <InputText
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-        />
+      <div className="login-form">
+        <div>
+          <span>Username</span>
+          <InputText
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+          />
+        </div>
+        <div>
+          <span>Password</span>
+          <InputText
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </div>
+        <Button label="Login" onClick={handleLogin} />
+        {error && <div>{error}</div>}
       </div>
-      <div>
-        <span>Password</span>
-        <InputText
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-      </div>
-      <Button label="Login" onClick={handleLogin} />
-      {error && <div>{error}</div>}
     </div>
   );
 };
 
-export default Login;
+export default Signin;

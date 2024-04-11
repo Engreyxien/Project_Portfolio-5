@@ -1,6 +1,6 @@
 import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
 import { Button } from "primereact/button";
-import routes from "./routes";
+import { routes } from "./routes";
 
 const TablesBtn = () => {
   const location = useLocation();

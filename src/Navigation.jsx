@@ -95,7 +95,6 @@ export default function Navigation() {
           label="Register"
           icon="pi pi-user-plus"
           iconPos="right"
-          onClick={handleRegisterClick}
         />
       </Link>
       <Link to="/signin">
@@ -104,7 +103,6 @@ export default function Navigation() {
           label="Sign In"
           icon="pi pi-user"
           iconPos="right"
-          onClick={handleSignInClick}
         />
       </Link>
     </div>

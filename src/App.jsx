@@ -2,7 +2,7 @@ import Navigation from "./Navigation";
 import AppHeader from "./AppHeader";
 import PopularDes from "./PopularDes";
 import TablesBtn from "./TablesBtn";
-import routes from "./routes";
+import { allRoutes } from "./routes";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import AppFooter from "./Footer";
 import Register from "./components/Register";
@@ -13,11 +13,12 @@ const App = () => {
     <div>
       <Navigation>
         <Routes>
-          {routes.map((route) => (
+          {allRoutes.map((route, index) => (
             <Route
-              key={route.name}
+              key={index}
               path={route.path}
-              element={<route.element />}
+              component={route.component || (() => route.element)}
+              exact
             />
           ))}
           <Route path="/register" element={<Register />} />
