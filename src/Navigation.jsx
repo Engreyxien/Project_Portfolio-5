@@ -15,8 +15,6 @@ export default function Navigation() {
   const [value, setValue] = useState("");
   const [searchDestination, setSearchDestination] = useState("");
   const [filteredDestinations, setFilteredDestinations] = useState([]);
-  const [showLogin, setShowLogin] = useState(false);
-  const [showRegister, setShowRegister] = useState(false);
 
   const searchDestinations = async () => {
     try {
@@ -44,28 +42,28 @@ export default function Navigation() {
     }
   };
 
-  const handleSignInClick = () => {
-    if (isLoggedIn()) {
-      navigate("/profile");
-    } else {
-      navigate("/signin");
-    }
-  };
+  // const handleSignInClick = () => {
+  //   if (isLoggedIn()) {
+  //     navigate("/profile");
+  //   } else {
+  //     navigate("/signin");
+  //   }
+  // };
 
-  const handleRegisterClick = () => {
-    navigate("/register");
-  };
+  // const handleRegisterClick = () => {
+  //   navigate("/register");
+  // };
 
-  const handleLoginFormSubmit = (formData) => {
-    // Call the API to authenticate the user with the formData
-    // If authentication is successful, redirect to the user profile page
-    // If authentication fails, show an error message
-  };
+  // const handleLoginFormSubmit = (formData) => {
+  //   // Call the API to authenticate the user with the formData
+  //   // If authentication is successful, redirect to the user profile page
+  //   // If authentication fails, show an error message
+  // };
 
-  const isLoggedIn = () => {
-    const token = localStorage.getItem("token");
-    return !!token;
-  };
+  // const isLoggedIn = () => {
+  //   const token = localStorage.getItem("token");
+  //   return !!token;
+  // };
 
   const start = (
     <Link to="/">

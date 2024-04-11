@@ -16,6 +16,8 @@ const App = () => {
         {allRoutes.map((route, index) => (
           <Route key={index} path={route.path} element={route.element} />
         ))}
+        <Route path="/signin" element={<Signin />} />
+        <Route path="/register" element={<Register />} />
       </Routes>
       <AppHeader />
       <PopularDes />
