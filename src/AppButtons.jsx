@@ -12,7 +12,7 @@ const AppButtons = () => {
   const countries = [
     {
       name: "Luzon",
-      code: "AU",
+      code: "01",
       states: [
         {
           name: "New South Wales",
@@ -33,7 +33,7 @@ const AppButtons = () => {
     },
     {
       name: "Visayas",
-      code: "CA",
+      code: "02",
       states: [
         {
           name: "Quebec",
@@ -53,7 +53,7 @@ const AppButtons = () => {
     },
     {
       name: "Mindanao",
-      code: "US",
+      code: "03",
       states: [
         {
           name: "California",
@@ -88,6 +88,7 @@ const AppButtons = () => {
       <div className="card flex justify-content-center">
         <span className="p-float-label">
           <Calendar
+            id="travel_date"
             inputId="travel_date"
             value={date}
             onChange={(e) => setDate(e.value)}
@@ -97,6 +98,7 @@ const AppButtons = () => {
       </div>
       <div className="card flex justify-content-center">
         <CascadeSelect
+          id="travel_city"
           value={selectedCity}
           onChange={(e) => setSelectedCity(e.value)}
           options={countries}

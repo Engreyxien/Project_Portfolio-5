@@ -10,7 +10,7 @@ const PopularDes = () => {
         <h4>Look for the most popular places</h4>
         <div className="BigImg">
           <div id="image1">
-            <a href="">
+            <a href="https://www.gettyimages.com/photos/boracay">
               <Image
                 id="img1"
                 src="https://wallpapercave.com/wp/wp3331019.jpg"
@@ -25,7 +25,10 @@ const PopularDes = () => {
             </h3>
           </div>
           <div id="image2">
-            <a href src="https://www.gettyimages.com/photos/boracay">
+            <a
+              href
+              src="https://www.gettyimages.com/photos/cebu-city-philippines"
+            >
               <Image
                 id="img2"
                 src="https://wallpaperaccess.com/full/2075093.gif"
@@ -42,7 +45,7 @@ const PopularDes = () => {
         </div>
         <div className="smallImage">
           <div id="image3">
-            <a href="">
+            <a href="https://www.gettyimages.com/photos/palawan-philippines">
               <Image
                 src="https://wallpaperaccess.com/full/4796747.jpg"
                 indicatorIcon={icon}
@@ -56,7 +59,7 @@ const PopularDes = () => {
             </h4>
           </div>
           <div id="image4">
-            <a href="">
+            <a href="https://www.istockphoto.com/photos/banaue-rice-terraces">
               <Image
                 src="https://wallpapercave.com/wp/wp4190774.jpg"
                 indicatorIcon={icon}
@@ -70,7 +73,7 @@ const PopularDes = () => {
             </h4>
           </div>
           <div id="image5">
-            <a href="">
+            <a href="https://www.istockphoto.com/photos/mayon-volcano">
               <Image
                 src="https://wallpaperaccess.com/full/22986.jpg"
                 indicatorIcon={icon}

@@ -2,8 +2,6 @@ import Destination from "./views/Destination";
 import City from "./views/City";
 import Province from "./views/Province";
 import Tours from "./views/Tours";
-import Login from "./Login";
-import Register from "./Register";
 
 const routes = [
   {

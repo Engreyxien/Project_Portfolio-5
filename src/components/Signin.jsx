@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { InputText } from "primereact/inputtext";
 import { Button } from "primereact/button";
 import axios from "axios";
+import Navbar from "../Navigation";
 
 const Login = () => {
   const [username, setUsername] = useState("");
@@ -19,6 +20,7 @@ const Login = () => {
 
   return (
     <div>
+      <Navbar />
       <div>
         <span>Username</span>
         <InputText

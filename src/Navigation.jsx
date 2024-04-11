@@ -3,17 +3,20 @@ import { useNavigate } from "react-router-dom";
 import { Menubar } from "primereact/menubar";
 import { InputText } from "primereact/inputtext";
 import { Button } from "primereact/button";
+import { Link } from "react-router-dom";
 import "./Navigation.css";
 import useApi from "./utils/http";
-import Login from "./Login";
-import Register from "./Register";
+import Signin from "./components/Signin";
+import Register from "./components/Register";
+
 export default function Navigation() {
   const navigate = useNavigate();
   const api = useApi();
   const [value, setValue] = useState("");
   const [searchDestination, setSearchDestination] = useState("");
   const [filteredDestinations, setFilteredDestinations] = useState([]);
-  const [showLogin, setShowLogin] = useState(false); // Add showLogin state
+  const [showLogin, setShowLogin] = useState(false);
+  const [showRegister, setShowRegister] = useState(false);
 
   const searchDestinations = async () => {
     try {
@@ -43,15 +46,14 @@ export default function Navigation() {
 
   const handleSignInClick = () => {
     if (isLoggedIn()) {
-      // If already logged in, navigate to the user profile page
       navigate("/profile");
     } else {
-      setShowLogin(true); // Show the Login component
+      navigate("/signin");
     }
   };
 
   const handleRegisterClick = () => {
-    navigate("/register"); // Navigates to the Register page
+    navigate("/register");
   };
 
   const handleLoginFormSubmit = (formData) => {
@@ -61,21 +63,23 @@ export default function Navigation() {
   };
 
   const isLoggedIn = () => {
-    // Check if the user is logged in (you can implement your own logic here)
-    return false; // Placeholder logic, replace with actual implementation
+    const token = localStorage.getItem("token");
+    return !!token;
   };
 
   const start = (
-    <img
-      alt="logo"
-      src="https://primefaces.org/cdn/primereact/images/logo.png"
-      height="40"
-      className="mr-2"
-    ></img>
+    <Link to="/">
+      <img
+        alt="logo"
+        src="https://primefaces.org/cdn/primereact/images/logo.png"
+        height="40"
+        className="mr-2"
+      ></img>
+    </Link>
   );
 
   const end = (
-    <div className="rght flex align-items-center gap-1 flex-1">
+    <div className="rght flex align-items-center">
       <Button id="ButtonA" label="Search" onClick={searchDestinations} />
       <InputText
         id="search"
@@ -85,25 +89,29 @@ export default function Navigation() {
         value={value}
         onChange={(e) => setValue(e.target.value)}
       />
-      <Button
-        id="ButtonR"
-        label="Register"
-        icon="pi pi-user-plus"
-        iconPos="right"
-        onClick={handleRegisterClick} // Updated onClick handler for Register button
-      />
-      <Button
-        id="ButtonS"
-        label="Sign In"
-        icon="pi pi-user"
-        iconPos="right"
-        onClick={handleSignInClick}
-      />
+      <Link to="/register">
+        <Button
+          id="ButtonR"
+          label="Register"
+          icon="pi pi-user-plus"
+          iconPos="right"
+          onClick={handleRegisterClick}
+        />
+      </Link>
+      <Link to="/signin">
+        <Button
+          id="ButtonS"
+          label="Sign In"
+          icon="pi pi-user"
+          iconPos="right"
+          onClick={handleSignInClick}
+        />
+      </Link>
     </div>
   );
 
   return (
-    <div className="nav card">
+    <div className="navcard">
       <Menubar className="menu" start={start} end={end} />
       <ul>
         {filteredDestinations.map((destination) => (

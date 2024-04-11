@@ -2,8 +2,9 @@ import React, { useState, useEffect } from "react";
 import { InputText } from "primereact/inputtext";
 import { Dropdown } from "primereact/dropdown";
 import { InputMask } from "primereact/inputmask";
-import useApi from "./utils/http";
 import { Button } from "primereact/button";
+import userApi from "../utils/http";
+import Navigation from "../Navigation";
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -21,7 +22,7 @@ const Register = () => {
     const fetchCountries = async () => {
       try {
         const response = await api.get("country.php"); // Use the api.get() method from useApi hook
-        setCountries(response.data); // Assuming response.data contains the list of countries
+        setCountries(response.data);
       } catch (error) {
         console.error("Error fetching countries:", error);
       }
@@ -42,6 +43,7 @@ const Register = () => {
     setFormData({
       ...formData,
       country: e.target.value,
+      S,
     });
   };
 
@@ -73,6 +75,7 @@ const Register = () => {
 
   return (
     <div>
+      <Navigation />
       <h2>Register</h2>
       <form onSubmit={handleSubmit}>
         <label htmlFor="username">Username:</label>

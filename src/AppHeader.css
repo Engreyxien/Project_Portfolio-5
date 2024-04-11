@@ -31,3 +31,36 @@ Legend {
 img {
   border-radius: 10px;
 }
+@media screen and (max-width: 951px),
+  (min-device-width: 320px) and (max-device-width: 480px) {
+  .HeaderHero {
+    padding: 5rem 2rem;
+    background: url(https://wallpapercave.com/wp/Chk1VFQ.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    border-radius: 5px;
+    height: auto;
+  }
+
+  .headText {
+    font-size: large;
+    color: black;
+    padding-left: 1rem;
+    font-weight: bold;
+  }
+
+  .LOGO {
+    border-width: 3px;
+    border-color: black;
+    background-color: transparent;
+    border-radius: 20px;
+    backdrop-filter: blur(3px);
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+  }
+
+  img {
+    border-radius: 10px;
+  }
+}

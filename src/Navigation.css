@@ -1,3 +1,12 @@
+.navcard {
+  padding: 0;
+  margin: 0;
+  margin-bottom: 0;
+}
+img {
+  cursor: pointer;
+}
+
 #ButtonA {
   margin-right: 0;
 }
@@ -19,4 +28,10 @@ img {
 }
 .menu {
   background-color: #27187e;
+}
+@media screen and (max-width: 951px),
+  (min-device-width: 320px) and (max-device-width: 480px) {
+  #search {
+    width: auto;
+  }
 }
