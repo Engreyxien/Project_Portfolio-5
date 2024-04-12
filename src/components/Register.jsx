@@ -3,22 +3,27 @@ import { InputText } from "primereact/inputtext";
 import { Dropdown } from "primereact/dropdown";
 import { InputMask } from "primereact/inputmask";
 import { Button } from "primereact/button";
-import { Route } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom"; // Import useLocation separately
 import { useApi } from "../utils/http";
 import Navigation from "../Navigation";
+import Footer from "../Footer";
 import { Toast } from "primereact/toast";
 import "./Register.css";
 
 const Register = () => {
-  const toast = useRef(null); // Use useRef here
+  const navigate = useNavigate();
+  const location = useLocation(); // Use the useLocation hook
+  const toast = useRef(null);
 
-  const show = () => {
+  const showSuccessToast = () => {
     toast.current.show({
-      severity: "info",
-      summary: "Info",
-      detail: "User Added Successfully",
+      severity: "success",
+      summary: "Success",
+      detail: "User added successfully",
     });
   };
+
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -72,18 +77,19 @@ const Register = () => {
           email_address: formData.email,
           password: formData.password,
           fullname: formData.fullName,
-          country_name: formData.country, // Make sure this matches the expected field name
+          country_name: formData.country,
         }),
       });
 
       if (response.ok) {
         const data = await response.json();
-        show(); // Call the show function to display the Toast
+        showSuccessToast();
         console.log("User added successfully:", data);
-        // Handle success response here (e.g., show a success message)
+        setTimeout(() => {
+          navigate("/dashboard");
+        }, 2000);
       } else {
         console.error("Failed to add user:", response.statusText);
-        // Handle error response here (e.g., show an error message)
       }
     } catch (error) {
       console.error("Error adding user:", error);
@@ -92,57 +98,61 @@ const Register = () => {
   };
 
   return (
-    <div className="register-form">
-      <h2>Register</h2>
-      <form onSubmit={handleSubmit} id="form">
-        <label htmlFor="username">Username:</label>
-        <InputText
-          id="username"
-          name="username"
-          value={formData.username}
-          onChange={handleChange}
-        />
-        <label htmlFor="email">Email Address:</label>
-        <InputText
-          id="email"
-          name="email"
-          value={formData.email}
-          onChange={handleChange}
-        />
-        <label htmlFor="fullName">Full Name:</label>
-        <InputText
-          id="fullName"
-          name="fullName"
-          value={formData.fullName}
-          onChange={handleChange}
-        />
-        <label htmlFor="password">Password:</label>
-        <InputText
-          id="password"
-          name="password"
-          type="password" // This line ensures it's a password input
-          value={formData.password}
-          onChange={handleChange}
-        />
-        <label htmlFor="country">Select Country:</label>
-        <Dropdown
-          id="country"
-          optionLabel="country_name"
-          optionValue="country_name"
-          value={formData.country}
-          onChange={handleCountryChange}
-          options={countries}
-        />
-        <Toast ref={toast} />
-        <Button
-          id="Button"
-          label=" Register"
-          icon="pi pi-user-plus"
-          iconPos="right"
-          severity="success"
-          onClick={handleSubmit}
-        />
-      </form>
+    <div>
+      <Navigation />
+      <div className="register-form">
+        <h2>Register</h2>
+        <form onSubmit={handleSubmit} id="form">
+          <label htmlFor="username">Username:</label>
+          <InputText
+            id="username"
+            name="username"
+            value={formData.username}
+            onChange={handleChange}
+          />
+          <label htmlFor="email">Email Address:</label>
+          <InputText
+            id="email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+          />
+          <label htmlFor="fullName">Full Name:</label>
+          <InputText
+            id="fullName"
+            name="fullName"
+            value={formData.fullName}
+            onChange={handleChange}
+          />
+          <label htmlFor="password">Password:</label>
+          <InputText
+            id="password"
+            name="password"
+            type="password" // This line ensures it's a password input
+            value={formData.password}
+            onChange={handleChange}
+          />
+          <label htmlFor="country">Select Country:</label>
+          <Dropdown
+            id="country"
+            optionLabel="country_name"
+            optionValue="country_name"
+            value={formData.country}
+            onChange={handleCountryChange}
+            options={countries}
+          />
+          <Button
+            id="Button"
+            label=" Register"
+            icon="pi pi-user-plus"
+            iconPos="right"
+            severity="success"
+            onClick={handleSubmit}
+          />
+        </form>
+        <Toast ref={toast} position="top-right" />
+      </div>
+      <Footer />
     </div>
   );
 };

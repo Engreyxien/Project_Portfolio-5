@@ -4,8 +4,12 @@ import { Button } from "primereact/button";
 import axios from "axios";
 import { Toast } from "primereact/toast";
 import "./Signin.css";
+import Navigation from "../Navigation";
+import Footer from "../Footer";
+import { useNavigate } from "react-router-dom";
 
 const Signin = () => {
+  const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -21,8 +25,6 @@ const Signin = () => {
       });
 
       if (response.status === 200) {
-        setIsLoggedIn(true);
-        setLoggedInUser(username);
         if (toast.current) {
           toast.current.show({
             severity: "success",
@@ -30,22 +32,11 @@ const Signin = () => {
             detail: "You have successfully logged in",
           });
         }
-      }
-    } catch (error) {
-      setError(error.message);
-    }
-  };
-  const handleAddDestination = async (destinationData) => {
-    try {
-      const response = await axios.post(
-        "http://your-api-url/add-destination",
-        destinationData
-      );
-      if (response.status === 200) {
-        //
-        console.log("Destination added successfully!");
-      } else {
-        setError("Failed to add destination. Please try again.");
+        setIsLoggedIn(true);
+        setLoggedInUser(username);
+        setTimeout(() => {
+          navigate("/dashboard");
+        }, 3000);
       }
     } catch (error) {
       setError(error.message);
@@ -70,45 +61,53 @@ const Signin = () => {
   };
 
   return (
-    <div className="login-form">
-      {!isLoggedIn ? (
-        <>
-          <h2>Login</h2>
-          <div className="field">
-            <div>
-              <label htmlFor="username">Username:</label>
-              <InputText
-                id="username"
-                name="username"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
+    <div>
+      <Navigation />
+      <div className="login-form">
+        {!isLoggedIn ? (
+          <>
+            <h2>Login</h2>
+            <div className="field">
+              <div>
+                <label htmlFor="username">Username:</label>
+                <InputText
+                  id="username"
+                  name="username"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                />
+              </div>
+            </div>
+            <div className="field">
+              <div>
+                <label htmlFor="password">Password:</label>
+                <InputText
+                  id="password"
+                  name="password"
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+              </div>
+            </div>
+            <div style={{ textAlign: "center" }}>
+              <Button
+                label="Login"
+                icon="pi pi-sign-in"
+                onClick={handleLogin}
               />
             </div>
-          </div>
-          <div className="field">
-            <div>
-              <label htmlFor="password">Password:</label>
-              <InputText
-                id="password"
-                name="password"
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-            </div>
-          </div>
-          <div style={{ textAlign: "center" }}>
-            <Button label="Login" icon="pi pi-sign-in" onClick={handleLogin} />
-          </div>
-          {error && <div>{error}</div>}
-          <Toast ref={toast} position="top-right" />
-        </>
-      ) : (
-        <>
-          <div>Welcome, {loggedInUser}</div>
-          {/* Add your main content here after login */}
-        </>
-      )}
+            {error && <div>{error}</div>}
+            <Toast ref={toast} position="top-right" />
+          </>
+        ) : (
+          <>
+            <div>Welcome, {loggedInUser}</div>
+            {/* Add your main content here after login */}
+          </>
+        )}
+      </div>
+      <Footer />
     </div>
   );
 };

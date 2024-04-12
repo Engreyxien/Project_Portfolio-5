@@ -42,31 +42,8 @@ export default function Navigation() {
     }
   };
 
-  // const handleSignInClick = () => {
-  //   if (isLoggedIn()) {
-  //     navigate("/profile");
-  //   } else {
-  //     navigate("/signin");
-  //   }
-  // };
-
-  // const handleRegisterClick = () => {
-  //   navigate("/register");
-  // };
-
-  // const handleLoginFormSubmit = (formData) => {
-  //   // Call the API to authenticate the user with the formData
-  //   // If authentication is successful, redirect to the user profile page
-  //   // If authentication fails, show an error message
-  // };
-
-  // const isLoggedIn = () => {
-  //   const token = localStorage.getItem("token");
-  //   return !!token;
-  // };
-
   const start = (
-    <Link to="/">
+    <Link to="/dashboard">
       <img
         alt="logo"
         src="https://primefaces.org/cdn/primereact/images/logo.png"
