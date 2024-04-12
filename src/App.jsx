@@ -8,6 +8,7 @@ import Register from "./components/Register"; // Import the Register component
 import Signin from "./components/Signin";
 import { useLocation } from "react-router-dom";
 import TablesBtn from "./TablesBtn";
+import LandingPage from "../src/pages/LandingPage.jsx";
 
 const App = () => {
   const location = useLocation();
