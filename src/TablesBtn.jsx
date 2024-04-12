@@ -3,6 +3,8 @@ import { Button } from "primereact/button";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Paginator } from "primereact/paginator";
+import { Dialog } from "primereact/dialog";
+import { InputText } from "primereact/inputtext";
 import useApi from "./utils/http";
 
 const TablesBtn = () => {
@@ -15,6 +17,8 @@ const TablesBtn = () => {
   const [tour, setTour] = useState("");
   const [first, setFirst] = useState(0);
   const [rows, setRows] = useState(5);
+  const [showModal, setShowModal] = useState(false);
+  const [editedDestination, setEditedDestination] = useState({});
 
   async function getDestination() {
     const { data } = await api.get("/destination.php");
@@ -51,7 +55,13 @@ const TablesBtn = () => {
     setFirst(event.first);
     setRows(event.rows);
   };
+  const handleEdit = () => {
+    setDisplayModal(true);
+  };
 
+  const onHide = () => {
+    setDisplayModal(false);
+  };
   return (
     <div className="card flex flex-wrap justify-content-center gap-3">
       <div className="buttons">
@@ -91,28 +101,79 @@ const TablesBtn = () => {
                       icon="pi pi-pencil"
                       className="p-button-rounded p-button-warning p-mr-2"
                       onClick={() => {
-                        const updatedDestination = {
+                        setEditedDestination({
                           ...rowData,
                           destination_name: "New Name",
-                        }; // Update with the new destination name
-                        fetch(
-                          `http://localhost/tours-db/destination.php/${rowData.destination_id}`,
-                          {
-                            method: "PUT",
-                            body: JSON.stringify(updatedDestination),
-                            headers: {
-                              "Content-Type": "application/json",
-                            },
-                          }
-                        )
-                          .then((response) => response.json())
-                          .then((data) => {
-                            // Handle the response data, update UI if needed
-                            console.log("Destination updated:", data);
-                          })
-                          .catch((error) => {
-                            console.error("Error updating destination:", error);
-                          });
+                          destination_description: "New Description",
+                          tour_id: "New Tour Code",
+                        });
+                        setShowModal(true); // Update with the new destination name
+                        const handleSaveChanges = () => {
+                          fetch(
+                            `http://localhost/tours-db/destination.php/${editedDestination.destination_name}`,
+                            {
+                              method: "PUT",
+                              body: JSON.stringify(editedDestination),
+                              headers: {
+                                "Content-Type": "application/json",
+                              },
+                            }
+                          )
+                            .then((response) => response.json())
+                            .then((data) => {
+                              console.log("Destination updated:", data);
+                              setShowModal(false);
+                              // Update UI if needed
+                            })
+                            .catch((error) => {
+                              console.error(
+                                "Error updating destination:",
+                                error
+                              );
+                              setShowModal(false);
+                            });
+                        };
+                        <Dialog
+                          visible={showModal}
+                          onHide={() => setShowModal(false)}
+                        >
+                          <div>
+                            <label>Destination Name:</label>
+                            <InputText
+                              value={editedDestination.destination_name}
+                              onChange={(e) =>
+                                setEditedDestination({
+                                  ...editedDestination,
+                                  destination_name: e.target.value,
+                                })
+                              }
+                            />
+                            <label>Destination Description:</label>
+                            <InputText
+                              value={editedDestination.destination_description}
+                              onChange={(e) =>
+                                setEditedDestination({
+                                  ...editedDestination,
+                                  destination_description: e.target.value,
+                                })
+                              }
+                            />
+                            <label>Tour Code:</label>
+                            <InputText
+                              value={editedDestination.tour_id}
+                              onChange={(e) =>
+                                setEditedDestination({
+                                  ...editedDestination,
+                                  tour_id: e.target.value,
+                                })
+                              }
+                            />
+                            <Button
+                              label="Save Changes"
+                              onClick={handleSaveChanges}
+                            />
+                          </div>
+                        </Dialog>;
                       }}
                     />
                     <Button

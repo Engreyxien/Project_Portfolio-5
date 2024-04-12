@@ -1,6 +1,7 @@
 import Destination from "./views/Destination";
 import City from "./views/City";
 import Province from "./views/Province";
+import Accommodation from "./views/Accommodation";
 import Tours from "./views/Tours";
 import { Route } from "react-router-dom";
 import Register from "./components/Register";
@@ -21,6 +22,11 @@ export const routes = [
     name: "Province",
     path: "/province",
     element: <Province />,
+  },
+  {
+    name: "Accommodation",
+    path: "/accommodation",
+    element: <Accommodation />,
   },
   {
     name: "Tours",

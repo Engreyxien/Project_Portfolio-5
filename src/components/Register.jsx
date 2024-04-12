@@ -141,15 +141,16 @@ const Register = () => {
             onChange={handleCountryChange}
             options={countries}
           />
-          <Button
-            id="Button"
-            label=" Register"
-            icon="pi pi-user-plus"
-            iconPos="right"
-            severity="success"
-            onClick={handleSubmit}
-          />
         </form>
+        <Button
+          id="Button"
+          label=" Register"
+          icon="pi pi-user-plus"
+          iconPos="right"
+          severity="success"
+          position="center"
+          onClick={handleSubmit}
+        />
         <Toast ref={toast} position="top-right" />
       </div>
       <Footer />
