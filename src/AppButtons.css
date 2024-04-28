@@ -1,10 +1,10 @@
 .NavButtons {
-  display: flex;
-  flex-direction: column;
   align-items: center;
+  justify-content: space-between;
+  gap: 10px;
 }
 
-.card {
+/* .card {
   margin: 10px;
   padding: 10px;
   width: 90%;
@@ -17,7 +17,7 @@
   width: 90%;
   margin: 10px;
   padding: 10px;
-}
+} */
 
 @media (min-width: 768px) {
   .NavButtons {
@@ -27,7 +27,20 @@
     flex-direction: row;
   }
 
-  .card {
-    width: auto;
+  @media (min-width: 768px) {
+    .NavButtons {
+      scale: auto;
+    }
   }
+}
+
+.booking {
+  display: flex;
+  gap: 10px;
+}
+
+#ButtonS {
+  height: 3rem;
+  background-color: #5355e7;
+  color: aliceblue;
 }

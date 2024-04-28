@@ -1,0 +1,13 @@
+.TableBtn {
+  width: 10rem;
+  height: 3rem;
+  justify-content: center;
+}
+.buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 5rem;
+  background-color: rgb(151, 200, 248);
+  border-radius: 1rem;
+}

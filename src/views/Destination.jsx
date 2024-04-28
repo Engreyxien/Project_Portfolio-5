@@ -16,7 +16,7 @@ function Destination() {
   // SUGGEST DESTINATION
   const suggest = async (event) => {
     try {
-      const response = await api.get("/destination.php");
+      const response = await api.get("/destination");
       const suggestData = response.data;
       console.log(suggestData);
 
@@ -33,7 +33,7 @@ function Destination() {
   const handleSearch = async (event) => {
     event.preventDefault();
     try {
-      const response = await api.get("/destination.php");
+      const response = await api.get("/destination");
 
       if (response.status === 200) {
         // Correct comparison operator
@@ -58,7 +58,7 @@ function Destination() {
   }, []);
 
   async function getDestination() {
-    const { data } = await api.get("/destination.php");
+    const { data } = await api.get("/destination");
 
     setSearchDestination(data);
   }

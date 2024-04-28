@@ -1,11 +1,12 @@
 import axios from "axios";
 
-export function useApi() {
+export function useApi(token = null) {
   return axios.create({
     baseURL: import.meta.env.VITE_API,
     headers: {
-      "Content-Type": "application/json",
       Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
     },
   });
 }

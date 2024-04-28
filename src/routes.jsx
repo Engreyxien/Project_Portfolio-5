@@ -5,6 +5,7 @@ import Tours from "./views/Tours";
 import { Route } from "react-router-dom";
 import Register from "./components/Register";
 import Signin from "./components/Signin";
+import Booking from "./pages/Booking";
 
 export const routes = [
   {
@@ -38,6 +39,11 @@ export const authRoutes = [
     name: "Signin",
     path: "/signin",
     element: <Signin />,
+  },
+  {
+    name: "Booking",
+    path: "/booking",
+    element: <Booking />,
   },
 ];
 export const allRoutes = [...routes, ...authRoutes];

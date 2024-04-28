@@ -7,18 +7,18 @@ import useApi from "../utils/http";
 
 function City() {
   const api = useApi();
-  const [city, setCity] = useState("");
+  const [city, setCity] = useState("null");
   const [value, setValue] = useState("");
   const [searchCity, setSearchCity] = useState("");
 
   const handleSearch = async (event) => {
     event.preventDefault();
     try {
-      const response = await api.get("/citymun.php");
+      const response = await api.get("/api/citymuns");
 
       if ((response.status = 200)) {
         const data = response.data;
-
+        console.log(data);
         const filteredCity = data.filter((city) =>
           city.citymun_name.toLowerCase().includes(value.toLowerCase())
         );
@@ -36,10 +36,30 @@ function City() {
   }, []);
 
   async function getCity() {
-    const { data } = await api.get("/citymun.php");
+    const { data } = await api.get("/citymuns");
+    console.log(data);
     setCity(data);
     setSearchCity(data);
   }
+
+  const onRowEditComplete = (e) => {
+    let _city = [...city];
+    let { newData, index } = e;
+
+    _city[index] = newData;
+
+    setCity(_city);
+  };
+
+  const textEditor = (options) => {
+    return (
+      <InputText
+        type="text"
+        value={options.value}
+        onChange={(e) => options.editorCallback(e.target.value)}
+      />
+    );
+  };
 
   return (
     <div>
@@ -52,11 +72,17 @@ function City() {
           value={searchCity}
           paginator
           rows={10}
+          editMode="row"
+          dataKey="id"
+          onRowEditComplete={onRowEditComplete}
           tableStyle={{ minWidth: "50rem" }}
         >
           <Column field="citymun_name" header="City"></Column>
-          <Column field="citymun_name"></Column>
-          <Column field="citymun_name"></Column>
+          <Column
+            rowEditor={allowEdit}
+            headerStyle={{ width: "10%", minWidth: "8rem" }}
+            bodyStyle={{ textAlign: "center" }}
+          ></Column>
         </DataTable>
       </div>
     </div>

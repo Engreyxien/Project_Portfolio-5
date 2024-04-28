@@ -1,125 +1,110 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "primereact/button";
 import { Calendar } from "primereact/calendar";
 import { CascadeSelect } from "primereact/cascadeselect";
 import "./AppButtons.css";
 import { useCounter } from "primereact/hooks";
+import { InputNumber } from "primereact/inputnumber";
+import { FloatLabel } from "primereact/floatlabel";
+import { Link } from "react-router-dom";
+import useApi from "./utils/http";
+import { Dropdown } from "primereact/dropdown";
 
 const AppButtons = () => {
+  const api = useApi();
+
   const [date, setDate] = useState(null); //date
-  const { count, increment, decrement, reset } = useCounter(0);
-  const [selectedCity, setSelectedCity] = useState(null); //countries
-  const countries = [
-    {
-      name: "Luzon",
-      code: "01",
-      states: [
-        {
-          name: "Region I",
-          cities: [
-            { cname: "Sydney", code: "A-SY" },
-            { cname: "Newcastle", code: "A-NE" },
-            { cname: "Wollongong", code: "A-WO" },
-          ],
-        },
-        {
-          name: "Region II",
-          cities: [
-            { cname: "Brisbane", code: "A-BR" },
-            { cname: "Townsville", code: "A-TO" },
-          ],
-        },
-        {
-          name: "Region III",
-          cities: [
-            { cname: "Perth", code: "A-PE" },
-            { cname: "Adelaide", code: "A-AD" },
-          ],
-        },
-      ],
-    },
-    {
-      name: "Visayas",
-      code: "02",
-      states: [
-        {
-          name: "Quebec",
-          cities: [
-            { cname: "Montreal", code: "C-MO" },
-            { cname: "Quebec City", code: "C-QU" },
-          ],
-        },
-        {
-          name: "Ontario",
-          cities: [
-            { cname: "Ottawa", code: "C-OT" },
-            { cname: "Toronto", code: "C-TO" },
-          ],
-        },
-      ],
-    },
-    {
-      name: "Mindanao",
-      code: "03",
-      states: [
-        {
-          name: "Region",
-          cities: [
-            { cname: "Los Angeles", code: "US-LA" },
-            { cname: "San Diego", code: "US-SD" },
-            { cname: "San Francisco", code: "US-SF" },
-          ],
-        },
-        {
-          name: "Florida",
-          cities: [
-            { cname: "Jacksonville", code: "US-JA" },
-            { cname: "Miami", code: "US-MI" },
-            { cname: "Tampa", code: "US-TA" },
-            { cname: "Orlando", code: "US-OR" },
-          ],
-        },
-        {
-          name: "Texas",
-          cities: [
-            { cname: "Austin", code: "US-AU" },
-            { cname: "Dallas", code: "US-DA" },
-            { cname: "Houston", code: "US-HO" },
-          ],
-        },
-      ],
-    },
-  ];
+  const [checkout, setCheckout] = useState("");
+  const [destination, getDestination] = useState("");
+  const [selectedDestination, setSelectedDestination] = useState(null);
+  const [adult, setAdult] = useState();
+  const [children, setChildren] = useState();
+
+  // async function getDestination() {
+  //   const { data } = await api.get("api/destinations");
+  //   // console.log(data);
+  //   destination(data);
+  // }
+
+  // useEffect(() => {
+  //   getDestination();
+  // }, []);
+
   return (
     <div className="NavButtons">
-      <div className="card flex justify-content-center">
-        <span className="p-float-label">
-          <Calendar
-            id="travel_date"
-            inputId="travel_date"
-            value={date}
-            onChange={(e) => setDate(e.value)}
+      <form className="booking">
+        <div className="card flex justify-content-center">
+          <span className="p-float-label">
+            <Calendar
+              id="travel_date"
+              inputId="travel_date"
+              tooltip="Choose your travel date"
+              tooltipOptions={{
+                position: "bottom",
+                mouseTrack: true,
+                mouseTrackTop: 20,
+              }}
+              value={date}
+              onChange={(e) => setDate(e.value)}
+            />
+            <label htmlFor="travel_date">Travel Date</label>
+          </span>
+        </div>
+        <div className="card flex justify-content-center">
+          <span className="p-float-label">
+            <Calendar
+              id="travel_date"
+              inputId="travel_date"
+              tooltip="Choose your Check-out date"
+              tooltipOptions={{
+                position: "bottom",
+                mouseTrack: true,
+                mouseTrackTop: 15,
+              }}
+              value={date}
+              onChange={(e) => setDate(e.value)}
+            />
+            <label htmlFor="travel_date">Check-out Date</label>
+          </span>
+        </div>
+
+        {/* <div className="card flex justify-content-center">
+          <Dropdown
+            value={destination}
+            onChange={(e) => setSelectedDestination(e.value)}
+            options="destination_name"
+            optionLabel="name"
+            placeholder="Select a City"
+            className="w-full md:w-14rem"
           />
-          <label htmlFor="travel_date">Travel Date</label>
-        </span>
-      </div>
-      <div className="card flex justify-content-center">
-        <CascadeSelect
-          id="travel_city"
-          value={selectedCity}
-          onChange={(e) => setSelectedCity(e.value)}
-          options={countries}
-          optionLabel="cname"
-          optionGroupLabel="name"
-          optionGroupChildren={["states", "cities"]}
-          className="w-full md:w-14rem"
-          breakpoint="767px"
-          placeholder="Select a City"
-          style={{ minWidth: "14rem" }}
-        />
-      </div>
+        </div> */}
+
+        <div className="card flex justify-content-center">
+          <FloatLabel>
+            <InputNumber
+              id="number-input"
+              value={children}
+              onValueChange={(e) => setChildren(e.value)}
+              tooltip="Put the number of Guest"
+              tooltipOptions={{
+                position: "bottom",
+                mouseTrack: true,
+                mouseTrackTop: 15,
+              }}
+            />
+            <label htmlFor="number-input">Number of guest</label>
+          </FloatLabel>
+        </div>
+      </form>
       <div className=" flex justify-content-center">
-        <Button id="searchBtn" label="Search" />
+        <Link to="/booking">
+          <Button
+            id="ButtonS"
+            label="Book now!"
+            icon="pi pi-user"
+            iconPos="right"
+          />
+        </Link>
       </div>
     </div>
   );

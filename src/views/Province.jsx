@@ -14,7 +14,7 @@ function Province() {
   const handleSearch = async (event) => {
     event.preventDefault();
     try {
-      const response = await api.get("/provinces.php");
+      const response = await api.get("/provinces");
       console.log(response);
       if ((response.status = 200)) {
         const data = response.data;
@@ -36,7 +36,7 @@ function Province() {
   }, []);
 
   async function getProvince() {
-    const { data } = await api.get("/provinces.php");
+    const { data } = await api.get("/provinces");
     setProvince(data);
     setSearchProvince(data);
   }

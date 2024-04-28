@@ -4,6 +4,7 @@ import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Paginator } from "primereact/paginator";
 import useApi from "./utils/http";
+import "./TablesBtn.css";
 
 const TablesBtn = () => {
   const [selectedRoute, setSelectedRoute] = useState(null);
@@ -17,25 +18,26 @@ const TablesBtn = () => {
   const [rows, setRows] = useState(5);
 
   async function getDestination() {
-    const { data } = await api.get("/destination.php");
+    const { data } = await api.get("api/destinations");
+    // console.log(data);
     setDestination(data);
   }
 
   async function getCity() {
-    const { data } = await api.get("/citymun.php");
+    const { data } = await api.get("/api/citymuns");
     setCity(data);
   }
 
   async function getProvince() {
-    const { data } = await api.get("/provinces.php");
+    const { data } = await api.get("/api/provinces");
     setProvince(data);
   }
   async function getAccommodation() {
-    const { data } = await api.get("/accommodation.php");
+    const { data } = await api.get("/api/accommodations");
     setAccommodation(data);
   }
   async function getTour() {
-    const { data } = await api.get("/tour.php");
+    const { data } = await api.get("/api/tours");
     setTour(data);
   }
 
@@ -55,15 +57,30 @@ const TablesBtn = () => {
   return (
     <div className="card flex flex-wrap justify-content-center gap-3">
       <div className="buttons">
-        <Button onClick={() => setSelectedRoute("Destination")}>
+        <Button
+          className="TableBtn"
+          onClick={() => setSelectedRoute("Destination")}
+        >
           Destination
         </Button>
-        <Button onClick={() => setSelectedRoute("City")}>City</Button>
-        <Button onClick={() => setSelectedRoute("Province")}>Province</Button>
-        <Button onClick={() => setSelectedRoute("Accommodation")}>
+        <Button className="TableBtn" onClick={() => setSelectedRoute("City")}>
+          City
+        </Button>
+        <Button
+          className="TableBtn"
+          onClick={() => setSelectedRoute("Province")}
+        >
+          Province
+        </Button>
+        <Button
+          className="TableBtn"
+          onClick={() => setSelectedRoute("Accommodation")}
+        >
           Accommodation
         </Button>
-        <Button onClick={() => setSelectedRoute("Tour")}>Tour</Button>
+        <Button className="TableBtn" onClick={() => setSelectedRoute("Tour")}>
+          Tour
+        </Button>
       </div>
       <div className="table">
         {selectedRoute === "Destination" && (
@@ -89,46 +106,15 @@ const TablesBtn = () => {
                   <div style={{ display: "flex" }}>
                     <Button
                       icon="pi pi-pencil"
-                      className="p-button-rounded p-button-warning p-mr-2"
+                      className="p-button-rounded p-button-warning p-1"
+                      label="Add this destination"
                       onClick={() => {
                         const updatedDestination = {
                           ...rowData,
-                          destination_name: "New Name",
+                          destinations_name: "New Name",
                         }; // Update with the new destination name
                         fetch(
-                          `http://localhost/tours-db/destination.php/${rowData.destination_id}`,
-                          {
-                            method: "PUT",
-                            body: JSON.stringify(updatedDestination),
-                            headers: {
-                              "Content-Type": "application/json",
-                            },
-                          }
-                        )
-                          .then((response) => response.json())
-                          .then((data) => {
-                            // Handle the response data, update UI if needed
-                            console.log("Destination updated:", data);
-                          })
-                          .catch((error) => {
-                            console.error("Error updating destination:", error);
-                          });
-                      }}
-                    />
-                    <Button
-                      icon="pi pi-trash"
-                      className="p-button-rounded p-button-danger"
-                    />
-                    <Button
-                      icon="pi pi-refresh"
-                      className="p-button-rounded p-button-success p-ml-2"
-                      onClick={() => {
-                        const updatedDestination = {
-                          ...rowData,
-                          destination_name: "New Name",
-                        }; // Update with the new destination name
-                        fetch(
-                          `http://localhost/tours-db/destination.php/${rowData.destination_id}`,
+                          `https://capstone-kodego-laravel.onrender.com/destinations${rowData.destinations_id}`,
                           {
                             method: "PUT",
                             body: JSON.stringify(updatedDestination),
@@ -168,7 +154,6 @@ const TablesBtn = () => {
               <Column field="citymun_name" header="City"></Column>
               <Column field="reg_code" header="Region Code"></Column>
               <Column field="prov_code" header="Province Code"></Column>
-              <Column field="quantity" header="Tour"></Column>
             </DataTable>
           </>
         )}

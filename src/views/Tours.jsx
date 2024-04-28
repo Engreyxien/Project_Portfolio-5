@@ -12,7 +12,7 @@ function Tours() {
   }, []);
 
   async function getTours() {
-    const { data } = await api.get("/tour.php");
+    const { data } = await api.get("/tours");
     setTours(data);
   }
 

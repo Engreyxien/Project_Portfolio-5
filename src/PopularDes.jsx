@@ -18,8 +18,9 @@ const PopularDes = () => {
                 width="540"
               />
             </a>
+            <h2>Boracay</h2>
             <h3>
-              Boracay <br />
+              <br />
               is a stunning island in the Philippines with white sandy beaches,
               crystal clear water, and a vibrant nightlife scene.
             </h3>
@@ -33,9 +34,10 @@ const PopularDes = () => {
                 width="540"
               />
             </a>
+            <h2>Cebu</h2>
             <h3>
-              Cebu <br /> is a bustling province in the Philippines known for
-              its beautiful beaches, rich history, delicious food, and vibrant
+              <br /> is a bustling province in the Philippines known for its
+              beautiful beaches, rich history, delicious food, and vibrant
               festivals.
             </h3>
           </div>
@@ -49,10 +51,11 @@ const PopularDes = () => {
                 width="350"
               />
             </a>
+            <h2>Palawan</h2>
             <h4>
-              Palawan <br /> is a breathtakingly beautiful island in the
-              Philippines, with crystal-clear waters, lush forests, and stunning
-              limestone cliffs.
+              <br /> is a breathtakingly beautiful island in the Philippines,
+              with crystal-clear waters, lush forests, and stunning limestone
+              cliffs.
             </h4>
           </div>
           <div id="image4">
@@ -63,8 +66,9 @@ const PopularDes = () => {
                 width="350"
               />
             </a>
+            <h2>Banaue Rice Terraces</h2>
             <h4>
-              Banaue Rice Terraces <br />
+              <br />
               is a stunning UNESCO World Heritage Site in the Philippines, with
               ancient rice terraces carved into the mountainside.
             </h4>
@@ -77,8 +81,9 @@ const PopularDes = () => {
                 width="350"
               />
             </a>
+            <h2>Mayon Volcano </h2>
             <h4>
-              Mayon Volcano <br />
+              <br />
               is a majestic stratovolcano in the Philippines, known for its
               symmetrical cone shape and scenic views.
             </h4>

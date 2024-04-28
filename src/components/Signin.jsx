@@ -7,6 +7,7 @@ import "./Signin.css";
 import Navigation from "../Navigation";
 import Footer from "../Footer";
 import { useNavigate } from "react-router-dom";
+import { Card } from "primereact/card";
 
 const Signin = () => {
   const navigate = useNavigate();
@@ -19,10 +20,13 @@ const Signin = () => {
 
   const handleLogin = async () => {
     try {
-      const response = await axios.post("http://localhost/tours-db/user.php", {
-        username,
-        password,
-      });
+      const response = await axios.post(
+        "https://capstone-kodego-laravel.onrender.com",
+        {
+          username,
+          password,
+        }
+      );
 
       if (response.status === 200) {
         if (toast.current) {
@@ -35,7 +39,7 @@ const Signin = () => {
         setIsLoggedIn(true);
         setLoggedInUser(username);
         setTimeout(() => {
-          navigate("/dashboard");
+          navigate("/");
         }, 3000);
       }
     } catch (error) {
@@ -62,52 +66,58 @@ const Signin = () => {
 
   return (
     <div>
-      <Navigation />
-      <div className="login-form">
-        {!isLoggedIn ? (
-          <>
-            <h2>Login</h2>
-            <div className="field">
-              <div>
-                <label htmlFor="username">Username:</label>
-                <InputText
-                  id="username"
-                  name="username"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
-                />
-              </div>
-            </div>
-            <div className="field">
-              <div>
-                <label htmlFor="password">Password:</label>
-                <InputText
-                  id="password"
-                  name="password"
-                  type="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                />
-              </div>
-            </div>
-            <div style={{ textAlign: "center" }}>
-              <Button
-                label="Login"
-                icon="pi pi-sign-in"
-                onClick={handleLogin}
-              />
-            </div>
-            {error && <div>{error}</div>}
-            <Toast ref={toast} position="top-right" />
-          </>
-        ) : (
-          <>
-            <div>Welcome, {loggedInUser}</div>
-            {/* Add your main content here after login */}
-          </>
-        )}
+      <div className="holder">
+        <Navigation />
+        <Card>
+          <div className="login-form">
+            {!isLoggedIn ? (
+              <>
+                <div></div>
+                <h2>Login</h2>
+                <div className="field">
+                  <div>
+                    <label htmlFor="username">Username:</label>
+                    <InputText
+                      id="username"
+                      name="username"
+                      value={username}
+                      onChange={(e) => setUsername(e.target.value)}
+                    />
+                  </div>
+                </div>
+                <div className="field">
+                  <div>
+                    <label htmlFor="password">Password:</label>
+                    <InputText
+                      id="password"
+                      name="password"
+                      type="password"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                    />
+                  </div>
+                </div>
+                <div style={{ textAlign: "center" }}>
+                  <Button
+                    label="Login"
+                    icon="pi pi-sign-in"
+                    onClick={handleLogin}
+                  />
+                </div>
+                {error && <div>{error}</div>}
+                <Toast ref={toast} position="top-right" />
+              </>
+            ) : (
+              <>
+                <div>Welcome, {loggedInUser}</div>
+                {/* Add your main content here after login */}
+              </>
+            )}
+          </div>
+        </Card>
+
+        <Footer />
       </div>
-      <Footer />
     </div>
   );
 };
