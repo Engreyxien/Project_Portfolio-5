@@ -20,14 +20,14 @@
 }
 
 #form label {
-  text-align: right;
+  text-align: left;
 }
 
 #form input {
   width: 100%; /* Fill the grid cell */
 }
 #Button {
-  display: block;
+  display: relative;
   justify-self: center;
   align-self: center;
   margin: 0 auto;

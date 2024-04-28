@@ -6,7 +6,7 @@ export function useApi(token = null) {
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer 13|j6aKZ96mUiOYtjuqwtKKYZ7P2EkUySgk7SKGRkuMbbf0e520`,
     },
   });
 }

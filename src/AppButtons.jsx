@@ -20,6 +20,10 @@ const AppButtons = () => {
   const [adult, setAdult] = useState();
   const [children, setChildren] = useState();
 
+  async function hangleBooknow(e) {
+    e.preventDefault();
+  }
+
   // async function getDestination() {
   //   const { data } = await api.get("api/destinations");
   //   // console.log(data);
@@ -61,8 +65,8 @@ const AppButtons = () => {
                 mouseTrack: true,
                 mouseTrackTop: 15,
               }}
-              value={date}
-              onChange={(e) => setDate(e.value)}
+              value={checkout}
+              onChange={(e) => setCheckout(e.value)}
             />
             <label htmlFor="travel_date">Check-out Date</label>
           </span>
