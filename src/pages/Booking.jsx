@@ -10,7 +10,7 @@ const Booking = () => {
   const [bookings, setBookings] = useState("");
 
   async function getBookings() {
-    const { data } = await api.get("api/bookings");
+    const { data } = await api.get("/api/bookings");
     console.log(data);
     setBookings(data);
   }
