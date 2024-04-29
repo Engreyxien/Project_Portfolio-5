@@ -2,13 +2,15 @@ import React, { useState, useEffect } from "react";
 import { Button } from "primereact/button";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
+import { Dialog } from "primereact/dialog";
+import { InputText } from "primereact/inputtext";
 import { Paginator } from "primereact/paginator";
 import useApi from "./utils/http";
 import "./TablesBtn.css";
 
 const TablesBtn = () => {
   const [selectedRoute, setSelectedRoute] = useState(null);
-  const api = useApi();
+
   const [destination, setDestination] = useState("");
   const [city, setCity] = useState("");
   const [province, setProvince] = useState("");
@@ -16,28 +18,34 @@ const TablesBtn = () => {
   const [tour, setTour] = useState("");
   const [first, setFirst] = useState(0);
   const [rows, setRows] = useState(5);
+  const [visible, setVisible] = useState(false);
+  const [destinationData, setDestinationData] = useState("");
+  const [editDestinationData, setEditDestinationData] = useState([]);
+  const [editDescription, setEditDescription] = useState([]);
+  const [token, setToken] = useState(localStorage.getItem("token"));
+  const api = useApi(token);
 
   async function getDestination() {
-    const { data } = await api.get("api/destinations");
+    const { data } = await api.get("/destinations");
     // console.log(data);
     setDestination(data);
   }
 
   async function getCity() {
-    const { data } = await api.get("/api/citymuns");
+    const { data } = await api.get("/citymuns");
     setCity(data);
   }
 
   async function getProvince() {
-    const { data } = await api.get("/api/provinces");
+    const { data } = await api.get("/provinces");
     setProvince(data);
   }
   async function getAccommodation() {
-    const { data } = await api.get("/api/accommodations");
+    const { data } = await api.get("/accommodations");
     setAccommodation(data);
   }
   async function getTour() {
-    const { data } = await api.get("/api/tours");
+    const { data } = await api.get("/tours");
     setTour(data);
   }
 
@@ -54,6 +62,32 @@ const TablesBtn = () => {
     setRows(event.rows);
   };
 
+  async function saveEdit(e) {
+    e.preventDefault();
+    try {
+      const body = {
+        destination_name: editDestinationData,
+        destination_description: editDescription,
+      };
+      const { data } = await api.put(
+        `/destination/${destinationData.id}`,
+        body
+      );
+    } catch (error) {}
+  }
+
+  function editDestination(rowData) {
+    setVisible(true);
+    setDestinationData(rowData);
+  }
+
+  async function deleteDestination(rowData) {
+    try {
+      const { data } = await api.delete(`/destination/${rowData.id}`);
+    } catch (error) {}
+  }
+
+  // console.log(destinationData.id);
   return (
     <div className="card flex flex-wrap justify-content-center gap-3">
       <div className="buttons">
@@ -132,6 +166,45 @@ const TablesBtn = () => {
                             console.error("Error updating destination:", error);
                           });
                       }}
+                    />
+                    <Button
+                      icon="pi pi-pencil"
+                      className="p-button-rounded p-button-warning p-mr-2"
+                      onClick={() => editDestination(rowData)}
+                    />
+
+                    <Dialog
+                      header="Edit Destination"
+                      visible={visible}
+                      style={{ width: "50vw" }}
+                      onHide={() => setVisible(false)}
+                    >
+                      {destinationData ? (
+                        <form onSubmit={saveEdit}>
+                          <InputText
+                            defaultValue={destinationData.destination_name}
+                            // placeholder={destinationData.destination_name}
+                            onChange={(e) =>
+                              setEditDestinationData(e.target.value)
+                            }
+                          />
+                          <InputText
+                            defaultValue={
+                              destinationData.destination_description
+                            }
+                            // placeholder={
+                            //   destinationData.destination_description
+                            // }
+                            onChange={(e) => setEditDescription(e.target.value)}
+                          />
+                          <Button label="Submit" />
+                        </form>
+                      ) : null}
+                    </Dialog>
+                    <Button
+                      icon="pi pi-trash"
+                      className="p-button-rounded p-button-danger"
+                      onClick={() => deleteDestination(rowData)}
                     />
                   </div>
                 )}

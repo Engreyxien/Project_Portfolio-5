@@ -6,8 +6,10 @@ import { Toast } from "primereact/toast";
 import "./Signin.css";
 import Navigation from "../Navigation";
 import Footer from "../Footer";
+import useApi from "../utils/http";
 import { useNavigate } from "react-router-dom";
 import { Card } from "primereact/card";
+import { Link } from "react-router-dom";
 
 const Signin = () => {
   const navigate = useNavigate();
@@ -17,16 +19,18 @@ const Signin = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [loggedInUser, setLoggedInUser] = useState(null);
   const toast = useRef(null);
+  const [token, setToken] = useState(localStorage.getItem("token"));
+  const api = useApi();
 
-  const handleLogin = async () => {
+  const handleLogin = async (e) => {
+    e.preventDefault();
     try {
-      const response = await axios.post(
-        "https://capstone-kodego-laravel.onrender.com",
-        {
-          username,
-          password,
-        }
-      );
+      const response = await api.post("/login", {
+        username,
+        password,
+      });
+      localStorage.setItem("token", response.data.token);
+      localStorage.setItem("user", JSON.stringify(response.data.user));
 
       if (response.status === 200) {
         if (toast.current) {
@@ -36,11 +40,13 @@ const Signin = () => {
             detail: "You have successfully logged in",
           });
         }
+        localStorage.setItem("token", response.data.token); // Store the token in local storage(token)
         setIsLoggedIn(true);
         setLoggedInUser(username);
-        setTimeout(() => {
-          navigate("/");
-        }, 3000);
+        // setTimeout(() => {
+        //   // navigate("/");
+        //   // navigate(0);
+        // }, 3000);
       }
     } catch (error) {
       setError(error.message);
@@ -97,12 +103,19 @@ const Signin = () => {
                     />
                   </div>
                 </div>
-                <div style={{ textAlign: "center" }}>
-                  <Button
-                    label="Login"
-                    icon="pi pi-sign-in"
-                    onClick={handleLogin}
-                  />
+                <div className="logOrRegister">
+                  <div style={{ textAlign: "center" }}>
+                    <Button
+                      label="Login"
+                      icon="pi pi-sign-in"
+                      onClick={handleLogin}
+                    />
+                  </div>
+
+                  <Link to={"/register"}>
+                    <div style={{ textAlign: "center" }}></div>
+                    <Button label="Register" icon="pi pi-sign-in" />
+                  </Link>
                 </div>
                 {error && <div>{error}</div>}
                 <Toast ref={toast} position="top-right" />

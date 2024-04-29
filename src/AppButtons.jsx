@@ -1,7 +1,8 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Button } from "primereact/button";
 import { Calendar } from "primereact/calendar";
 import { CascadeSelect } from "primereact/cascadeselect";
+import { Navigate, useNavigate } from "react-router-dom";
 import "./AppButtons.css";
 import { useCounter } from "primereact/hooks";
 import { InputNumber } from "primereact/inputnumber";
@@ -9,34 +10,93 @@ import { FloatLabel } from "primereact/floatlabel";
 import { Link } from "react-router-dom";
 import useApi from "./utils/http";
 import { Dropdown } from "primereact/dropdown";
+import useLocalStorage from "./hooks/useLocalStorage";
 
 const AppButtons = () => {
-  const api = useApi();
-
   const [date, setDate] = useState(null); //date
   const [checkout, setCheckout] = useState("");
-  const [destination, getDestination] = useState("");
-  const [selectedDestination, setSelectedDestination] = useState(null);
+  const [selectedDestination, setSelectedDestination] = useState("");
   const [adult, setAdult] = useState();
   const [children, setChildren] = useState();
+  const [token, setToken] = useState(localStorage.getItem("token"));
+  const { setItem } = useLocalStorage();
+  const [user, setUser] = useState(
+    JSON.parse(localStorage.getItem("user") || null)
+  );
+  const api = useApi(token);
+  const navigate = useNavigate();
+
+  // form data
+  const [check_in, setCheckIn] = useState([]);
+  const [check_out, setCheckOut] = useState([]);
+  const [destination_name, setDestination] = useState([]);
+  const [number_of_guests, setGuestsNumber] = useState([]);
+  const [tour_title, setTour] = useState("null");
+  async function handleBooking(e) {
+    console.log({ check_in, check_out, destination_name, number_of_guests });
+    e.preventDefault();
+    try {
+      const body = {
+        check_in,
+        check_out,
+        destination_name: destination_name.id,
+        number_of_guests,
+        tour_title: null,
+        accommodation_name: null,
+        user_id: user.id,
+      };
+      console.log(body);
+      const { data } = await api.post("/bookings", body);
+      console.log(data);
+      navigate("/booking");
+    } catch (e) {
+      console.log(e);
+      // // console.log(e.response.data.message);
+      // return;
+    }
+  }
+
+  useEffect(() => {
+    fetchDestination();
+  }, []);
+
+  const fetchDestination = async () => {
+    try {
+      const response = await api.get("/destinations");
+
+      setSelectedDestination(response.data);
+    } catch (error) {
+      console.error("Error fetching destinations:", error);
+      return;
+    }
+  };
+
+  const handleSelectDestination = (e) => {
+    setSelectedDestination({
+      ...selectedDestination,
+      destination_name: e.target.value,
+    });
+  };
 
   async function hangleBooknow(e) {
     e.preventDefault();
   }
 
-  // async function getDestination() {
-  //   const { data } = await api.get("api/destinations");
-  //   // console.log(data);
-  //   destination(data);
-  // }
-
   // useEffect(() => {
   //   getDestination();
   // }, []);
 
+  // useEffect(() => {
+  //   if (!token) {
+  //     navigate("/register");
+  //   }
+
+  //   return () => {};
+  // }, []);
+
   return (
     <div className="NavButtons">
-      <form className="booking">
+      <form className="booking" onSubmit={handleBooking}>
         <div className="card flex justify-content-center">
           <span className="p-float-label">
             <Calendar
@@ -48,8 +108,8 @@ const AppButtons = () => {
                 mouseTrack: true,
                 mouseTrackTop: 20,
               }}
-              value={date}
-              onChange={(e) => setDate(e.value)}
+              value={check_in}
+              onChange={(e) => setCheckIn(e.value)}
             />
             <label htmlFor="travel_date">Travel Date</label>
           </span>
@@ -66,29 +126,29 @@ const AppButtons = () => {
                 mouseTrackTop: 15,
               }}
               value={checkout}
-              onChange={(e) => setCheckout(e.value)}
+              onChange={(e) => setCheckOut(e.value)}
             />
             <label htmlFor="travel_date">Check-out Date</label>
           </span>
         </div>
 
-        {/* <div className="card flex justify-content-center">
+        <div className="card flex justify-content-center">
           <Dropdown
-            value={destination}
-            onChange={(e) => setSelectedDestination(e.value)}
-            options="destination_name"
-            optionLabel="name"
-            placeholder="Select a City"
+            value={destination_name}
+            onChange={(e) => setDestination(e.value)}
+            options={selectedDestination}
+            optionLabel="destination_name"
+            placeholder="Select your Destination"
             className="w-full md:w-14rem"
           />
-        </div> */}
+        </div>
 
         <div className="card flex justify-content-center">
           <FloatLabel>
             <InputNumber
               id="number-input"
-              value={children}
-              onValueChange={(e) => setChildren(e.value)}
+              value={number_of_guests}
+              onValueChange={(e) => setGuestsNumber(e.value)}
               tooltip="Put the number of Guest"
               tooltipOptions={{
                 position: "bottom",
@@ -99,17 +159,16 @@ const AppButtons = () => {
             <label htmlFor="number-input">Number of guest</label>
           </FloatLabel>
         </div>
-      </form>
-      <div className=" flex justify-content-center">
-        <Link to="/booking">
+        <div className=" flex justify-content-center">
           <Button
             id="ButtonS"
             label="Book now!"
             icon="pi pi-user"
             iconPos="right"
+            type="submit"
           />
-        </Link>
-      </div>
+        </div>
+      </form>
     </div>
   );
 };

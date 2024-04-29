@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 import { Menubar } from "primereact/menubar";
 import { InputText } from "primereact/inputtext";
 import { Button } from "primereact/button";
@@ -24,6 +25,7 @@ export default function Navigation() {
   const [searchDestination, setSearchDestination] = useState("");
   const [filteredDestinations, setFilteredDestinations] = useState([]);
   const [visibleRight, setVisibleRight] = useState(false);
+  const [token, setToken] = useState(localStorage.getItem("token"));
 
   // const op = useRef(null);
 
@@ -31,9 +33,16 @@ export default function Navigation() {
   //   op.current.hide();
   // };
 
+  // useEffect(() => {
+  //   if (!token) {
+  //     navigate("/register");
+  //   }
+
+  //   return () => {};
+  // }, []);
   const searchDestinations = async () => {
     try {
-      const response = await api.get("/destination.php");
+      const response = await api.get("/destinations");
 
       if (response.status === 200) {
         const data = response.data;

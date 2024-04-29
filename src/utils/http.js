@@ -10,4 +10,5 @@ export function useApi(token = null) {
     },
   });
 }
+
 export default useApi;

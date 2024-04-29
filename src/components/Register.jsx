@@ -9,6 +9,7 @@ import { Dropdown } from "primereact/dropdown";
 import { Toast } from "primereact/toast";
 import "./Register.css";
 import useLocalStorage from "../hooks/useLocalStorage";
+import { Link } from "react-router-dom";
 
 function Register() {
   const { setItem } = useLocalStorage();
@@ -19,9 +20,9 @@ function Register() {
   const [password, setPassword] = useState("");
   const [password_confirmation, setPasswordConfirmation] = useState("");
   const [profile_picture, setProfilePicture] = useState("");
-  const [country_name, setSelectedCountry] = useState("");
+  const [country_id, setSelectedCountry] = useState("");
   const [countries, getCountries] = useState("");
-  const api = useApi();
+  const api = useApi(token);
   const navigate = useNavigate();
   const toast = useRef(null);
 
@@ -36,12 +37,9 @@ function Register() {
         password,
         password_confirmation,
         profile_picture,
-        country_name,
+        country_id,
       };
-      const { data } = await api.post(
-        "https://capstone-kodego-laravel.onrender.com/api/register",
-        body
-      );
+      const { data } = await api.post(`/register/${rowData.id}`, body);
       setItem("token", data.token);
       setItem("user", JSON.stringify(data.user));
       navigate("/");
@@ -54,7 +52,7 @@ function Register() {
   useEffect(() => {
     const fetchCountries = async () => {
       try {
-        const response = await api.get("/api/countries");
+        const response = await api.get("/countries");
         getCountries(response.data);
       } catch (error) {
         console.error("Error fetching countries:", error);
@@ -221,7 +219,7 @@ function Register() {
             <label htmlFor="Country">Country:</label>
             <div className="card flex justify-content-center">
               <Dropdown
-                value={country_name}
+                value={country_id}
                 id="Country"
                 onChange={(e) => setSelectedCountry(e.target.value)}
                 options={countries}
@@ -231,14 +229,26 @@ function Register() {
               />
             </div>
           </form>
-          <Button
-            id="Reg"
-            label=" Register"
-            icon="pi pi-user-plus"
-            iconPos="right"
-            severity="success"
-            onClick={handleRegister}
-          />
+          <div className="registerOrLog">
+            <Button
+              id="Reg"
+              label=" Register"
+              icon="pi pi-user-plus"
+              iconPos="right"
+              severity="success"
+              onClick={handleRegister}
+            />
+            <Link to="/signin">
+              <Button
+                id="Reg"
+                label=" Log in"
+                icon="pi pi-user-plus"
+                iconPos="right"
+                severity="success"
+              ></Button>
+            </Link>
+          </div>
+
           <Toast ref={toast} position="top-right" />
         </div>
       </div>
